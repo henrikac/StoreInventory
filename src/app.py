@@ -3,6 +3,8 @@ import csv
 from datetime import datetime
 from typing import Dict, List
 
+import product
+
 
 def read_csv(filename: str) -> List[OrderedDict]:
     """Reads data from a .csv file"""
@@ -32,6 +34,11 @@ def clean_data(products: List[OrderedDict]) -> List[Dict]:
     return cleaned_data
 
 
+
 if __name__ == '__main__':
-    pass
+    data = read_csv('inventory.csv')
+    cleaned_data = clean_data(data)
+    product.open_db()
+    product.add_products_to_db(cleaned_data)
+    product.close_db()
 
