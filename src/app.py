@@ -13,23 +13,25 @@ def read_csv(filename: str) -> List[OrderedDict]:
         return [product for product in reader]
 
 
+def convert_data(product: Dict) -> Dict:
+    """Converts data in a dict"""
+    for key, value in product.items():
+        if key == 'product_price':
+            product[key] = int(float(value[1:]) * 100)  # converts into cents
+        elif key == 'product_quantity':
+            product[key] = int(value)
+        elif key == 'date_updated':
+            product[key] = datetime.strptime(value, '%m/%d/%Y')
+
+    return product
+
 
 def clean_data(products: List[OrderedDict]) -> List[Dict]:
     """Cleans the provided data"""
     cleaned_data: List[Dict] = []
 
     for product in products:
-        temp = dict(product)
-
-        for key, value in product.items():
-            if key == 'product_price':
-                temp[key] = int(float(value[1:]) * 100)  # converts into cents
-            elif key == 'product_quantity':
-                temp[key] = int(value)
-            elif key == 'date_updated':
-                temp[key] = datetime.strptime(value, '%m/%d/%Y')
-
-        cleaned_data.append(temp)
+        cleaned_data.append(convert_data(product))
 
     return cleaned_data
 
