@@ -7,6 +7,7 @@ because peewee does not support type hinting
 from datetime import datetime
 
 from peewee import *
+from playhouse.shortcuts import model_to_dict
 
 
 db = SqliteDatabase('inventory.db')
@@ -42,6 +43,18 @@ def add_products_to_db(products):
                     old_product.save()
 
 
+def get_product(id):
+    """Gets a product from the database by its id
+    Returns None if no product with given id
+    """
+    product = Product.get_or_none(Product.product_id == id)
+
+    if product:
+        return model_to_dict(product)
+
+    return product
+
+
 class Product(Model):
     product_id = AutoField()
     product_name = CharField(max_length=140, unique=True)
@@ -51,4 +64,7 @@ class Product(Model):
 
     class Meta:
         database = db
+
+    def __str__(self):
+        return self.product_name
 
