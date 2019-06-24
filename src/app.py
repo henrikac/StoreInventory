@@ -62,11 +62,11 @@ def prompt_for_product_name() -> str:
             return prod_name
 
 
-def prompt_for_int(str_value: str) -> int:
+def prompt_for_int(prompt_msg: str) -> int:
     """Prompts the user for an integer"""
     while True:
         try:
-            result = int(input(str_value))
+            result = int(input(prompt_msg))
 
             if result < 0:
                 raise ValueError
@@ -74,6 +74,18 @@ def prompt_for_int(str_value: str) -> int:
             print('Invalid input: Please enter a number greater than or equal to 0')
         else:
             return result
+
+
+def prompt_for_date() -> datetime:
+    """Prompts the user for a date (MM/DD/YYYY)"""
+    while True:
+        try:
+            str_date = input('Enter creation/update date (MM/DD/YYYY): ')
+            date = datetime.strptime(str_date, '%m/%d/%Y')
+        except ValueError:
+            print('\nInvalid date: Please enter a date formatted MM/DD/YYYY\n')
+        else:
+            return date
 
 
 def clear_screen() -> None:
@@ -107,7 +119,7 @@ def add_product() -> None:
     product_name = prompt_for_product_name()
     product_quantity = prompt_for_int('Enter product quantity: ')
     product_price = prompt_for_int('Enter product price (cents): ')
-    product_updated = datetime.now()
+    product_updated = prompt_for_date()
 
     product = {'product_name': product_name,
                'product_quantity': product_quantity,
