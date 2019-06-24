@@ -60,7 +60,6 @@ def view_product() -> None:
     """Display a product to the user"""
     prod_id = prompt_for_id()
     product = prod.get_product(prod_id)
-    #import pdb; pdb.set_trace()
 
     if product:
         print()
@@ -80,7 +79,20 @@ def add_product() -> None:
 
 def create_backup() -> None:
     """Creates a backup"""
-    pass
+    products = prod.get_all_products()
+    fieldnames = ['product_name', 'product_quantity', 'product_price', 'date_updated']
+    
+    with open('backup.csv', 'w') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+        writer.writeheader()
+        for product in products:
+            writer.writerow({'product_name': product['product_name'],
+                             'product_quantity': product['product_quantity'],
+                             'product_price': product['product_price'],
+                             'date_updated': product['date_updated'].strftime('%m/%d/%Y')})
+
+    input('\nBackup has been created!\n\nPress enter to continue...')
 
 
 def quit() -> None:

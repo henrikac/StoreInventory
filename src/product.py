@@ -52,6 +52,17 @@ def add_product_to_db(product: Dict) -> None:
             old_product.save()
 
 
+def get_all_products() -> List[Dict]:
+    """Gets all the products and transforms them into dicts"""
+    products = Product.select()
+    products_dict: List[Dict] = []
+
+    for product in products:
+        products_dict.append(model_to_dict(product))
+
+    return products_dict
+
+
 def get_product(id: int) -> Union[Dict, None]:
     """Gets a product from the database by its id
     Returns None if no product with given id
