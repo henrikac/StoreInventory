@@ -51,6 +51,31 @@ def prompt_for_id() -> int:
             return prod_id
 
 
+def prompt_for_product_name() -> str:
+    """Prompts the user for a product name"""
+    while True:
+        prod_name = input('Enter product name: ')
+
+        if len(prod_name.strip()) < 1:
+            print('Please enter the product name')
+        else:
+            return prod_name
+
+
+def prompt_for_int(str_value: str) -> int:
+    """Prompts the user for an integer"""
+    while True:
+        try:
+            result = int(input(str_value))
+
+            if result < 0:
+                raise ValueError
+        except ValueError:
+            print('Invalid input: Please enter a number greater than or equal to 0')
+        else:
+            return result
+
+
 def clear_screen() -> None:
     """Clears the console"""
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -74,7 +99,24 @@ def view_product() -> None:
 
 def add_product() -> None:
     """Adds a product to the database"""
-    pass
+    clear_screen()
+    print('=' * 11)
+    print('ADD PRODUCT')
+    print('=' * 11, end='\n\n')
+
+    product_name = prompt_for_product_name()
+    product_quantity = prompt_for_int('Enter product quantity: ')
+    product_price = prompt_for_int('Enter product price (cents): ')
+    product_updated = datetime.now()
+
+    product = {'product_name': product_name,
+               'product_quantity': product_quantity,
+               'product_price': product_price,
+               'date_updated': product_updated}
+
+    prod.add_product_to_db(product)
+
+    input('\nProduct added to the database\n\nPress enter to continue...')
 
 
 def create_backup() -> None:
