@@ -3,7 +3,10 @@ from datetime import datetime
 import os
 import unittest
 
-from app import clean_data, convert_data, read_csv
+from app import (clean_data,
+                 convert_data,
+                 quit,
+                 read_csv)
 
 
 class TestDataFunctions(unittest.TestCase):
@@ -50,8 +53,12 @@ class TestDataFunctions(unittest.TestCase):
             product = convert_data(product)
 
         self.assertEqual(self.tmp_data, cleaned_data)
-                
 
+
+class TestMenuFunctions(unittest.TestCase):
+    def test_quit(self):
+        self.assertRaises(SystemExit, quit)
+                
 
 if __name__ == '__main__':
     unittest.main()
