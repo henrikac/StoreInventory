@@ -1,3 +1,9 @@
+"""Store Inventory
+
+Created: 2019
+Author: Henrik A. Christensen
+"""
+
 from collections import OrderedDict
 import csv
 from datetime import datetime

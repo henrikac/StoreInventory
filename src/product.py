@@ -1,7 +1,10 @@
 """Contains all database related stuff
 
-Type hints were not added to this file
-because peewee does not support type hinting
+Running 'mypy' on this file will cause lots errors
+because peewee doesn't support type hints
+
+Created: 2019
+Author: Henrik A. Christensen
 """
 
 from datetime import datetime
@@ -45,7 +48,7 @@ def add_product_to_db(product: Dict) -> None:
     except IntegrityError:
         old_product = Product.get(product_name=product['product_name'])
 
-        if old_product.date_updated < product['date_updated']:
+        if old_product.date_updated <= product['date_updated']:
             old_product.product_price = product['product_price']
             old_product.product_quantity = product['product_quantity']
             old_product.date_updated = product['date_updated']
