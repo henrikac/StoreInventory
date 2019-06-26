@@ -142,7 +142,7 @@ def create_backup() -> None:
     products = prod.get_all_products()
     fieldnames = ['product_name', 'product_quantity', 'product_price', 'date_updated']
     
-    with open('backup.csv', 'w') as csvfile:
+    with open('backup.csv', 'w', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
 
         writer.writeheader()
@@ -158,6 +158,7 @@ def create_backup() -> None:
 def quit() -> None:
     """Exits the program"""
     prod.close_db()
+    print('\nCome back soon! :-)\n')
     raise SystemExit
 
 
@@ -200,5 +201,8 @@ menu = OrderedDict([
 
 
 if __name__ == '__main__':
-    run_app()
+    try:
+        run_app()
+    except KeyboardInterrupt:
+        print('\n\nCome back soon! :-)\n')
 
