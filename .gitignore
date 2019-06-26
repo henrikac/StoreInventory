@@ -1,5 +1,6 @@
 __pycache__
 *.db
+backup.csv
 venv/
 *.swp
 .mypy_cache/
