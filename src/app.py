@@ -107,6 +107,10 @@ def view_product() -> None:
     if product:
         print()
         for key, value in product.items():
+            if key == 'product_price':
+                value = f'${(value / 100):0.2f}'
+            if key == 'date_updated':
+                value = value.strftime('%m/%d/%Y')
             print(f'{key.replace("_", " ")}: {value}')
     else:
         print('\n** Sorry, couldn\'t find a product with that id **')
